@@ -5,11 +5,13 @@ public class Members extends Customer{
     private String monthCheckIn;
     private String conditions;
     private Customer customer;
-    private Members(Members.Builder builder){
+    private int Id_Member;
+    Members(Members.Builder builder){
         this.subscription = builder.subscription;
         this.monthCheckIn = builder.monthCheckIn;
         this.conditions = builder.conditions;
         this.customer = builder.customer;
+        this.Id_Member = builder.Id_Member;
     }
 
     public String getSubscription() {
@@ -27,12 +29,17 @@ public class Members extends Customer{
     public Customer getCustomer() {
         return customer;
     }
+
+    public int getId_Member() {
+        return Id_Member;
+    }
     public String toString() {
         return "Members{" +
-                "subscription='" + subscription + '\'' +
-                ", monthCheckIn='" + monthCheckIn + '\'' +
-                ", conditions='" + conditions + '\'' +
-                ", customer=" + customer +
+                "subscription='" + getSubscription() + '\'' +
+                ", monthCheckIn='" + getMonthCheckIn() + '\'' +
+                ", conditions='" + getConditions() + '\'' +
+                ", customer=" + getCustomer() +
+                ", Id_Member=" + getId_Member() +
                 '}';
     }
 
@@ -41,6 +48,7 @@ public class Members extends Customer{
         private String monthCheckIn;
         private String conditions;
         private Customer customer;
+        private int Id_Member;
 
         public Builder setSubscription(String subscription) {
             this.subscription = subscription;
@@ -59,6 +67,11 @@ public class Members extends Customer{
 
         public Builder setCustomer(Customer customer) {
             this.customer = customer;
+            return this;
+        }
+
+        public Builder setId_Member(int Id_Member) {
+            this.Id_Member = Id_Member;
             return this;
         }
         public Members build(){
