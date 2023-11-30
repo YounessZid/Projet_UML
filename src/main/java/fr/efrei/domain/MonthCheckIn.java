@@ -3,14 +3,13 @@ package fr.efrei.domain;
 
 import java.util.Date;
 
-public class MonthCheckIn extends Members {
+public class MonthCheckIn {
 
     private static final int MIN_CHECK_INS_REQUIRED = 3;
     private Date checkInDate;
     private Members member;
 
-    public MonthCheckIn(Members.Builder builder, Date checkInDate, Members member) {
-        super(builder);
+    public MonthCheckIn(Date checkInDate, Members member) {
         this.checkInDate = checkInDate;
         this.member = member;
     }
@@ -19,14 +18,14 @@ public class MonthCheckIn extends Members {
         return checkInDate;
     }
 
+    public Members getMember() {
+        return member;
+    }
 
     @Override
     public String toString() {
         return "MonthCheckIn{" +
-                "subscription='" + getSubscription() + '\'' +
-                ", monthCheckIn='" + getMonthCheckIn() + '\'' +
-                ", conditions='" + getConditions() + '\'' +
-                ", customer=" + getCustomer() +
+                "member=" + getMember() +
                 ", checkInDate=" + getCheckInDate() +
                 //", isValid=" + isCheckInValid() +
                 '}';
