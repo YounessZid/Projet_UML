@@ -7,7 +7,7 @@ public class Customer {
     public Customer() {
     }
 
-    private Customer(Builder builder) {
+    private Customer(Customer.Builder builder) {
         firstName = builder.firstName;
         lastName = builder.lastName;
     }
