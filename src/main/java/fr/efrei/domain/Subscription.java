@@ -11,7 +11,7 @@ public class Subscription {
     private ArrayList<String> advantages;
     private ArrayList<String> conditions;
     private String monthCheckIn;
-    private int ageMember;
+    private Customer customer;
 
 
 
