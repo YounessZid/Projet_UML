@@ -1,6 +1,8 @@
 package fr.efrei.views;
 import java.util.*;
 
+import fr.efrei.domain.Customer;
+
 public class Customer_Menu {
 
 
@@ -20,20 +22,21 @@ public class Customer_Menu {
 
             int choice = scanner.nextInt();
 
+            java.lang.String lastName;
             switch (choice) {
                 case 1:
                     // Call a method to view information
                     System.out.println("New to the club ? Register now !\n");
                     System.out.println("First Name : ");
-                    String firstName = scanner.next();
+                    String myfirstName = scanner.next();
                     System.out.println("Last Name : ");
-                    Private String lastName = scanner.next();
+                    String mylastName = scanner.next();
                     System.out.println("Age : ");
-                    Private String age = scanner.nextInt();
+                    int myage = scanner.nextInt();
                     System.out.println("ID : ");
-                    Private String ID = scanner.nextInt();
+                    int myID = scanner.nextInt();
 
-                    Customer customer = new Customer(firstName, lastName, age, ID);
+                    Customer customer = new Customer(myfirstName, mylastName, myage, myID);
 
                     break;
                 case 2:
