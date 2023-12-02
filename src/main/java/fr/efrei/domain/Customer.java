@@ -4,6 +4,7 @@ public class Customer {
     private String firstName;
     private String lastName;
     private int age;
+    private int ID;
 
 
     public Customer() {
@@ -13,6 +14,7 @@ public class Customer {
         firstName = builder.firstName;
         lastName = builder.lastName;
         age = builder.age;
+        ID = builder.age;
     }
 
 
@@ -24,6 +26,11 @@ public class Customer {
         return lastName;
 
     }
+
+    public int getID() {
+        return ID;
+    }
+
     private int getAge() {
         return age;
     }
@@ -33,12 +40,14 @@ public class Customer {
                 "firstName='" + getFirstName() + '\'' +
                 ", lastName='" + getLastName() + '\'' +
                 ", age='" + getAge() + '\'' +
+                "Id=" + getID() +
                 '}';
     }
     public static class Builder {
         private String firstName;
         private String lastName;
         private int age;
+        private int ID_Cust;
 
         public Builder setFirstName(String firstName) {
             this.firstName = firstName;
@@ -51,6 +60,10 @@ public class Customer {
 
         public Builder setAge(int age) {
             this.age = age;
+            return this;
+        }
+        public Builder setID_Cust(int ID_Cust){
+            this.ID_Cust = ID_Cust;
             return this;
         }
         public Customer build() {

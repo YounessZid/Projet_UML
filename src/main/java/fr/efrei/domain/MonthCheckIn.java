@@ -5,38 +5,49 @@ import java.util.Date;
 
 public class MonthCheckIn {
 
-    private static final int MIN_CHECK_INS_REQUIRED = 3;
-    private Date checkInDate;
+    private static final int minCheckIn = 3;
+    private int checkInCpt;
+
     private Members member;
 
-    public MonthCheckIn(Date checkInDate, Members member) {
-        this.checkInDate = checkInDate;
-        this.member = member;
+    private MonthCheckIn(MonthCheckIn.Builder builder) {
+        checkInCpt= builder.checkInCpt
+        member= builder.member;
     }
 
-    public Date getCheckInDate() {
-        return checkInDate;
+    public int getCheckInCpt() {
+        return checkInCpt;
     }
 
-    public Members getMember() {
-        return member;
-    }
+    public Members getMember() {return member;}
 
     @Override
     public String toString() {
         return "MonthCheckIn{" +
                 "member=" + getMember() +
-                ", checkInDate=" + getCheckInDate() +
+                ", checkInDate=" + getCheckInCpt() +
                 //", isValid=" + isCheckInValid() +
                 '}';
     }
 
-    public void setCheckInDate(Date checkInDate) {
-        this.checkInDate = checkInDate;
-    }
+    public static class Builder {
+        private static final int mincheckIn = 3;
+        private int checkInCpt;
 
-    public void setMember(Members member) {
-        this.member = member;
+        private Members member;
+
+        public MonthCheckIn.Builder setcheckInCpt(int checkInCpt) {
+            this.checkInCpt = checkInCpt;
+            return this;
+        }
+        public Builder setLastName(Members member) {
+            this.member = member;
+            return this;
+        }
+
+        public MonthCheckIn build() {
+            return new MonthCheckIn(this);
+        }
     }
     
     
