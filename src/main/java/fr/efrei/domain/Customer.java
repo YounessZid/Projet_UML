@@ -24,7 +24,7 @@ public class Customer {
         return lastName;
 
     }
-    private int getAge() {
+    public int getAge() {
         return age;
     }
     @Override
