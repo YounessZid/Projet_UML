@@ -11,7 +11,7 @@ public class MonthCheckIn {
     private Members member;
 
     private MonthCheckIn(MonthCheckIn.Builder builder) {
-        checkInCpt= builder.checkInCpt
+        checkInCpt= builder.checkInCpt;
         member= builder.member;
     }
 
