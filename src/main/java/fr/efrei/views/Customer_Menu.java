@@ -1,10 +1,14 @@
 package fr.efrei.views;
-import java.util.Scanner;
+import java.util.*;
 
 public class Customer_Menu {
+
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
+        Customer ArrayList[];
 
         while (!exit) {
             System.out.println("===== Gym Subscription Menu =====");
@@ -19,7 +23,18 @@ public class Customer_Menu {
             switch (choice) {
                 case 1:
                     // Call a method to view information
-                    System.out.println("Subscribe to one of our subscription...");
+                    System.out.println("New to the club ? Register now !\n");
+                    System.out.println("First Name : ");
+                    String firstName = scanner.next();
+                    System.out.println("Last Name : ");
+                    Private String lastName = scanner.next();
+                    System.out.println("Age : ");
+                    Private String age = scanner.nextInt();
+                    System.out.println("ID : ");
+                    Private String ID = scanner.nextInt();
+
+                    Customer customer = new Customer(firstName, lastName, age, ID);
+
                     break;
                 case 2:
                     // Call a method to add information
