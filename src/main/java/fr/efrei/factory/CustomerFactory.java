@@ -9,7 +9,7 @@ public class CustomerFactory {
                 .setFirstName(firstName)
                 .setLastName(lastName)
                 .setAge(age)
-                .setID_Cust(ID_Cust)
+                .setID_cust(ID_Cust)
                 .build();
     }
 }

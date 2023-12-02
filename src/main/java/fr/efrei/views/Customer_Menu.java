@@ -2,6 +2,7 @@ package fr.efrei.views;
 import java.util.*;
 
 import fr.efrei.domain.Customer;
+import fr.efrei.factory.CustomerFactory;
 
 public class Customer_Menu {
 
@@ -36,7 +37,7 @@ public class Customer_Menu {
                     System.out.println("ID : ");
                     int myID = scanner.nextInt();
 
-                    Customer customer = new Customer(myfirstName, mylastName, myage, myID);
+                    Customer myCustomer = createCustomer(myfirstName, mylastName, myage, myID);
 
                     break;
                 case 2:
