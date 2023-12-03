@@ -26,7 +26,7 @@ public class Customer_Menu {
             switch (choice) {
                 case 1:
                     // Call a method to view information
-                    System.out.println("Register as a new customer...");
+                    System.out.println("Register as a new customer ...");
                     CustomerRepository customerRepository = CustomerRepository.getRepository();
                     customerRepository.addCustomer();
                     System.out.printf(""+customerRepository.customerArrayList);
