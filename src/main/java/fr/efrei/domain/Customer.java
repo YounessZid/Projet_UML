@@ -31,6 +31,10 @@ public class Customer {
         return age;
     }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public int getID() {
         return ID;
     }
@@ -51,6 +55,8 @@ public class Customer {
         System.out.println("ID: " + ID);
         System.out.println("=====================================");
     }
+
+
     public static class Builder {
         private String firstName;
         private String lastName;
