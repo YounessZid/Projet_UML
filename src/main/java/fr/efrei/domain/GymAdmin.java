@@ -1,4 +1,4 @@
-package fr.efrei.domain;
+ package fr.efrei.domain;
 
 public class GymAdmin {
     private String firstName;
