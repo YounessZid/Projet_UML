@@ -14,7 +14,7 @@ public class Customer {
         firstName = builder.firstName;
         lastName = builder.lastName;
         age = builder.age;
-        ID = builder.age;
+        ID = builder.ID;
     }
 
 
@@ -22,32 +22,40 @@ public class Customer {
     public String getFirstName() {
         return firstName;
     }
-    private String getLastName() {
-        return lastName;
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     public int getID() {
         return ID;
     }
-
-    private int getAge() {
-        return age;
-    }
     @Override
     public String toString() {
         return "Members{" +
-                "firstName='" + getFirstName() + '\'' +
-                ", lastName='" + getLastName() + '\'' +
-                ", age='" + getAge() + '\'' +
-                "Id=" + getID() +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", id=" + ID +
                 '}';
+    }
+    public void printCustomerDetails() {
+        System.out.println("Customer Details:");
+        System.out.println("First Name: " + firstName);
+        System.out.println("Last Name: " + lastName);
+        System.out.println("Age: " + age);
+        System.out.println("ID: " + ID);
+        System.out.println("=====================================");
     }
     public static class Builder {
         private String firstName;
         private String lastName;
         private int age;
-        private int ID_Cust;
+        private int ID;
 
         public Builder setFirstName(String firstName) {
             this.firstName = firstName;
@@ -62,8 +70,8 @@ public class Customer {
             this.age = age;
             return this;
         }
-        public Builder setID_Cust(int ID_Cust){
-            this.ID_Cust = ID_Cust;
+        public Builder setID(int ID){
+            this.ID = ID;
             return this;
         }
         public Customer build() {
