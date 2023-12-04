@@ -75,7 +75,7 @@ public class Members_Menu {
                 case 3:
                     System.out.println("Unsubscribe to a subscription...");
                     SubscriptionRepository subscriptionRepository = SubscriptionRepository.getRepository();
-                    subscriptionRepository.addSubscriptions();
+                    subscriptionRepository.BaseSubscriptions();
                     MembersRepository membersRepository = MembersRepository.getRepository();
                     membersRepository.unsubscribe();
 
