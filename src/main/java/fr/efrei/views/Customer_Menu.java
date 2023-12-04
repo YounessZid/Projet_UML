@@ -37,7 +37,7 @@ public class Customer_Menu {
                     // Call a method to add information
                     System.out.println("Subscribe to a subscription...");
                     SubscriptionRepository subscriptionRepository = SubscriptionRepository.getRepository();
-                    subscriptionRepository.BaseSubscriptions();
+                    subscriptionRepository.addSubscriptions();
                     CustomerRepository customerRepository1 = CustomerRepository.getRepository();
                     customerRepository1.subscribe();
                     break;

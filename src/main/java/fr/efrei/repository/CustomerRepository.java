@@ -1,11 +1,13 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package fr.efrei.repository;
 
 import fr.efrei.domain.Customer;
-import fr.efrei.factory.CustomerFactory;
 import fr.efrei.domain.Members;
 import fr.efrei.domain.Subscription;
-import fr.efrei.factory.MembersFactory;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,7 +49,8 @@ public class CustomerRepository {
             for(id = idScanner.nextInt(); this.isDuplicateId(id); id = idScanner.nextInt()) {
                 System.out.println("This customer id is already taken, please enter another one");
             }
-            Customer customer = CustomerFactory.createCustomer(firstname, lastname, age, id);
+
+            Customer customer = (new Customer.Builder()).setFirstName(firstname).setLastName(lastname).setAge(age).setID(id).build();
             customerArrayList.add(customer);
             customer.printCustomerDetails();
         }
@@ -128,7 +131,8 @@ public class CustomerRepository {
                 customerExists = true;
                 System.out.print("Enter new age for the customer: ");
                 int newAge = scanner.nextInt();
-                Customer updatedCustomer = CustomerFactory.createCustomer(customer.getFirstName(), customer.getLastName(), newAge, customer.getID());
+                Customer updatedCustomer = (new Customer.Builder()).setFirstName(customer.getFirstName()).setLastName(customer.getLastName()).setAge(newAge).setID(customer.getID()).build();
+                customerArrayList.remove(customer);
                 customerArrayList.add(updatedCustomer);
                 System.out.println("Age updated successfully for customer with ID " + idToUpdate);
                 break;
@@ -138,6 +142,7 @@ public class CustomerRepository {
         if (!customerExists) {
             System.out.println("Customer with ID " + idToUpdate + " not found.");
         }
+
     }
 
     public void subscribe() {
@@ -163,10 +168,17 @@ public class CustomerRepository {
 
                 double discountedPrice = (double)chosenSubscription.getPrice() * (1.0 - discount);
                 this.findCustomerById(customerId);
-                Customer updatedCustomer = CustomerFactory.createCustomer(customer.getFirstName(), customer.getLastName(), customer.getAge(), customer.getID());
+                Customer updatedCustomer = new Customer.Builder()
+                        .setFirstName(customer.getFirstName())
+                        .setLastName(customer.getLastName())
+                        .setAge(customer.getAge())
+                        .setID(customer.getID())
+                        .build();
 
-
-                Members member = MembersFactory.createMembers(updatedCustomer, chosenSubscription.getID_Subscription());
+                Members member = new Members.Builder()
+                        .setCustomer(updatedCustomer)
+                        .setID_Subscription(chosenSubscription.getID_Subscription())
+                        .build();
 
                 System.out.println("Subscription details:");
                 System.out.println(chosenSubscription.toString());
