@@ -1,4 +1,8 @@
 package fr.efrei;
+import fr.efrei.domain.Members;
+import fr.efrei.views.Customer_Menu;
+import fr.efrei.views.Members_Menu;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -8,8 +12,8 @@ public class Menu {
 
         while (!exit) {
             System.out.println("===== Gym Subscription Menu =====");
-            System.out.println("1. Subscribe to a Charline :)");
-            System.out.println("2. Check-in");
+            System.out.println("1. Customer menu :)");
+            System.out.println("2. Member menu :|");
             System.out.println("3. Change the age");
             System.out.println("4. Quit the gym");
             System.out.println("5. Au revoir Youness !");
@@ -21,10 +25,13 @@ public class Menu {
                 case 1:
                     // Call a method to view information
                     System.out.println("Subscribe to a subscription...");
+                    Customer_Menu.main(args);
                     break;
                 case 2:
                     // Call a method to add information
-                    System.out.println("Check-in...");
+                    System.out.println("Members menu...");
+                    Members_Menu.main(args);
+
                     break;
                 case 3:
                     // Call a method to update information

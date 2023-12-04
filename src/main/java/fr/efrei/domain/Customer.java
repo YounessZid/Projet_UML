@@ -1,3 +1,4 @@
+
 package fr.efrei.domain;
 
 public class Customer {
@@ -5,7 +6,7 @@ public class Customer {
     private String lastName;
     private int age;
     private int ID;
-
+    private int ID_Subscription;
 
     public Customer() {
     }
@@ -15,6 +16,7 @@ public class Customer {
         lastName = builder.lastName;
         age = builder.age;
         ID = builder.ID;
+        ID_Subscription = builder.ID_Subscription;
     }
 
 
@@ -31,6 +33,10 @@ public class Customer {
         return age;
     }
 
+    public int getID_Subscription() {
+        return ID_Subscription;
+    }
+
     public void setAge(int age) {
         this.age = age;
     }
@@ -45,6 +51,7 @@ public class Customer {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", id=" + ID +
+                ", ID_Subscription=" + ID_Subscription +
                 '}';
     }
     public void printCustomerDetails() {
@@ -62,6 +69,7 @@ public class Customer {
         private String lastName;
         private int age;
         private int ID;
+        private int ID_Subscription;
 
         public Builder setFirstName(String firstName) {
             this.firstName = firstName;
@@ -78,6 +86,10 @@ public class Customer {
         }
         public Builder setID(int ID){
             this.ID = ID;
+            return this;
+        }
+        public Builder setID_Subscription(int ID_Subscription){
+            this.ID_Subscription = ID_Subscription;
             return this;
         }
         public Customer build() {

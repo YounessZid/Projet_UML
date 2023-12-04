@@ -12,6 +12,7 @@ public class Subscription {
     private String description;
     private Customer customer;
 
+
     private Subscription(Subscription.Builder builder){
         name = builder.name;
         duration = builder.duration;
@@ -46,6 +47,7 @@ public class Subscription {
 
 
 
+
     @Override
     public String toString() {
         return "Subscription{" +
@@ -65,6 +67,7 @@ public class Subscription {
         private Date startDate;
         private String description;
         private Customer customer;
+
 
         public Builder setName(String name) {
             this.name = name;
@@ -90,6 +93,7 @@ public class Subscription {
             this.customer = customer;
             return this;
         }
+
         public Subscription build(){
             return new Subscription(this);
         }

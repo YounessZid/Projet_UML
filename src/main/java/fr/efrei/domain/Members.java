@@ -3,6 +3,7 @@ package fr.efrei.domain;
 public class Members extends Customer {
     private Customer customer;
 
+
     // Make the constructor public
     public Members(Members.Builder builder) {
         this.customer = builder.customer;

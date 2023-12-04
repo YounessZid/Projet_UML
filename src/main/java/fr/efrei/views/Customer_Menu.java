@@ -18,33 +18,46 @@ public class Customer_Menu {
             System.out.println(" 1. Register as a new customer :");
             System.out.println(" 2. Get a subscription :");
             System.out.println(" 3. Change your age in our database");
-            System.out.println(" 4. Go to the main menu");
-            System.out.println(" 5. Quit the gym");
+            System.out.println(" 4. Members menu");
+            System.out.println(" 5. Go to the main menu");
+            System.out.println(" 6. Quit the gym");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
+
             switch (choice) {
                 case 1:
                     // Call a method to view information
-                    System.out.println("Register as a new customer ...");
+                    System.out.println("Register as a new customer...");
                     CustomerRepository customerRepository = CustomerRepository.getRepository();
                     customerRepository.addCustomer();
-                    System.out.printf(""+customerRepository.customerArrayList);
                     break;
                 case 2:
                     // Call a method to add information
-                    System.out.println("Check-in...");
+                    System.out.println("Subscribe to a subscription...");
+                    SubscriptionRepository subscriptionRepository = SubscriptionRepository.getRepository();
+                    subscriptionRepository.addSubscriptions();
+                    CustomerRepository customerRepository1 = CustomerRepository.getRepository();
+                    customerRepository1.subscribe();
                     break;
                 case 3:
                     // Call a method to update information
                     System.out.println("Change the age...");
+                    CustomerRepository customerRepository2 = CustomerRepository.getRepository();
+                    customerRepository2.updateCustomerAge();
                     break;
+
                 case 4:
-                    // Call a method to delete information
+
+                    System.out.println("Enter the members menu...");
+                    Members_Menu.main(args);
+                    break;
+                case 5:
+
                     System.out.println("Go to the main menu...");
                     Menu.main(args);
                     break;
-                case 5:
+                case 6:
                     // Exit the program
                     System.out.println("Quit the gym...");
                     exit = true;

@@ -1,92 +1,225 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package fr.efrei.repository;
 
 import fr.efrei.domain.Customer;
-
+import fr.efrei.domain.Members;
+import fr.efrei.domain.Subscription;
+import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 public class CustomerRepository {
-    public List<Customer> customerArrayList = new ArrayList<>();
+    public static List<Customer> customerArrayList = new ArrayList();
     private static CustomerRepository instance = null;
-    private CustomerRepository(){}
-    public static CustomerRepository getRepository(){
-        if(instance == null){
+
+    private CustomerRepository() {
+    }
+
+    public static CustomerRepository getRepository() {
+        if (instance == null) {
             instance = new CustomerRepository();
         }
+
         return instance;
     }
-    //CRUDE OPERATION :
-    public void addCustomer(){
-        Scanner scanner = new Scanner(System.in);
 
+    public void addCustomer() {
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter firstname: ");
         String firstname = scanner.nextLine();
-
         System.out.print("Enter lastname: ");
         String lastname = scanner.nextLine();
-
         System.out.print("Enter age: ");
         int age = scanner.nextInt();
+        if (this.isCustomerExists(firstname, lastname, age)) {
+            PrintStream var10000 = System.out;
+            Customer var10001 = this.getExistingCustomer(firstname, lastname, age);
+            var10000.println("Customer already exists: " + String.valueOf(var10001));
+        } else {
+            Scanner idScanner = new Scanner(System.in);
+            System.out.print("Enter id: ");
 
-        if (isCustomerExists(firstname, lastname, age)) {
-            System.out.println("Customer already exists: " + getExistingCustomer(firstname, lastname, age));
-            return;
-        }
-
-        Scanner idScanner = new Scanner(System.in);
-
-        System.out.print("Enter id: ");
-        int id = idScanner.nextInt();
-
-        while (isDuplicateId(id)) {
-            System.out.println("This customer id is already taken, please enter another one");
-            id = idScanner.nextInt();
-        }
-        Customer customer = new Customer.Builder()
-                .setFirstName(firstname)
-                .setLastName(lastname)
-                .setAge(age)
-                .setID(id)
-                .build();
-        customerArrayList.add(customer);
-        customer.printCustomerDetails();
-        //Prints the newly made customer
-    }
-    private boolean isDuplicateId(int id) {
-        for (Customer customer : customerArrayList) {
-            if (customer.getID() == id) {
-                return true;
+            int id;
+            for(id = idScanner.nextInt(); this.isDuplicateId(id); id = idScanner.nextInt()) {
+                System.out.println("This customer id is already taken, please enter another one");
             }
+
+            Customer customer = (new Customer.Builder()).setFirstName(firstname).setLastName(lastname).setAge(age).setID(id).build();
+            customerArrayList.add(customer);
+            customer.printCustomerDetails();
         }
-        return false;
     }
-    //checks if the id is already taken
+
+    private boolean isDuplicateId(int id) {
+        Iterator var2 = customerArrayList.iterator();
+
+        Customer customer;
+        do {
+            if (!var2.hasNext()) {
+                return false;
+            }
+
+            customer = (Customer)var2.next();
+        } while(customer.getID() != id);
+
+        return true;
+    }
 
     private boolean isCustomerExists(String firstname, String lastname, int age) {
-        for (Customer customer : customerArrayList) {
-            if (customer.getFirstName().equals(firstname) &&
-                    customer.getLastName().equals(lastname) &&
-                    customer.getAge() == age) {
-                return true;
+        Iterator var4 = customerArrayList.iterator();
+
+        Customer customer;
+        do {
+            if (!var4.hasNext()) {
+                return false;
             }
-        }
-        return false;
+
+            customer = (Customer)var4.next();
+        } while(!customer.getFirstName().equals(firstname) || !customer.getLastName().equals(lastname) || customer.getAge() != age);
+
+        return true;
     }
-    //checks if the customer already exists
 
     private Customer getExistingCustomer(String firstname, String lastname, int age) {
-        for (Customer customer : customerArrayList) {
-            if (customer.getFirstName().equals(firstname) &&
-                    customer.getLastName().equals(lastname) &&
-                    customer.getAge() == age) {
-                return customer;
+        Iterator var4 = customerArrayList.iterator();
+
+        Customer customer;
+        do {
+            if (!var4.hasNext()) {
+                return null;
+            }
+
+            customer = (Customer)var4.next();
+        } while(!customer.getFirstName().equals(firstname) || !customer.getLastName().equals(lastname) || customer.getAge() != age);
+
+        return customer;
+    }
+
+    public Customer getCustomerById(int customerId) {
+        Iterator var2 = customerArrayList.iterator();
+
+        Customer customer;
+        do {
+            if (!var2.hasNext()) {
+                return null;
+            }
+
+            customer = (Customer)var2.next();
+        } while(customer.getID() != customerId);
+
+        return customer;
+    }
+
+    public static Customer baseCustomer() {
+        Customer customer1 = (new Customer.Builder()).setFirstName("John").setLastName("Doe").setAge(25).setID(1).build();
+        customerArrayList.add(customer1);
+        return customer1;
+    }
+
+    public void updateCustomerAge() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter customer ID to update age: ");
+        int idToUpdate = scanner.nextInt();
+        boolean customerExists = false;
+        Iterator var4 = customerArrayList.iterator();
+
+        while(var4.hasNext()) {
+            Customer customer = (Customer)var4.next();
+            if (customer.getID() == idToUpdate) {
+                customerExists = true;
+                System.out.print("Enter new age for the customer: ");
+                int newAge = scanner.nextInt();
+                Customer updatedCustomer = (new Customer.Builder()).setFirstName(customer.getFirstName()).setLastName(customer.getLastName()).setAge(newAge).setID(customer.getID()).build();
+                customerArrayList.remove(customer);
+                customerArrayList.add(updatedCustomer);
+                System.out.println("Age updated successfully for customer with ID " + idToUpdate);
+                break;
             }
         }
-        return null;
+
+        if (!customerExists) {
+            System.out.println("Customer with ID " + idToUpdate + " not found.");
+        }
+
     }
-    //returns the customer if he already exists
-    public void removeSubscription(Customer customer){
+
+    public void subscribe() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter customer ID to subscribe: ");
+        int customerId = scanner.nextInt();
+        Customer customer = this.findCustomerById(customerId);
+        if (customer == null) {
+            System.out.println("Customer with ID " + customerId + " not found.");
+        } else {
+            System.out.println("Existing Subscriptions:");
+            this.displaySubscriptions();
+            System.out.print("Enter the subscription number to subscribe: ");
+            int subscriptionChoice = scanner.nextInt();
+            if (subscriptionChoice >= 1 && subscriptionChoice <= SubscriptionRepository.getRepository().getSubscriptionArrayList().size()) {
+                Subscription chosenSubscription = (Subscription)SubscriptionRepository.getRepository().getSubscriptionArrayList().get(subscriptionChoice - 1);
+                int customerAge = customer.getAge();
+                double discount = 0.0;
+                if (customerAge < 18 || customerAge > 60) {
+                    discount = 0.2;
+                    System.out.println("Congratulations! You get a 20% discount for being under 18 or over 60.");
+                }
+
+                double discountedPrice = (double)chosenSubscription.getPrice() * (1.0 - discount);
+                this.findCustomerById(customerId);
+                (new Customer.Builder()).setFirstName(customer.getFirstName()).setLastName(customer.getLastName()).setAge(customer.getAge()).setID(customer.getID()).setID_Subscription(subscriptionChoice).build();
+                (new Members.Builder()).setCustomer(customer).build();
+                System.out.println("Subscription details:");
+                System.out.println(chosenSubscription.toString());
+                System.out.println("Final Price: $" + discountedPrice);
+                System.out.println("Member ID: " + customer.getID());
+                System.out.println("ID Subscription: " + customer.getID_Subscription());
+            } else {
+                System.out.println("Invalid subscription choice.");
+            }
+        }
+    }
+
+    private Customer findCustomerById(int customerId) {
+        Iterator var2 = customerArrayList.iterator();
+
+        Customer customer;
+        do {
+            if (!var2.hasNext()) {
+                return null;
+            }
+
+            customer = (Customer)var2.next();
+        } while(customer.getID() != customerId);
+
+        return customer;
+    }
+
+    private void displaySubscriptions() {
+        for(int i = 0; i < SubscriptionRepository.getRepository().getSubscriptionArrayList().size(); ++i) {
+            Subscription subscription = (Subscription)SubscriptionRepository.getRepository().getSubscriptionArrayList().get(i);
+            System.out.println(i + 1 + ". " + subscription.toString());
+        }
+
+    }
+
+    public void displayCustomerDetails() {
+        System.out.println("Customer List:");
+        Iterator var1 = customerArrayList.iterator();
+
+        while(var1.hasNext()) {
+            Customer customer = (Customer)var1.next();
+            System.out.println(customer.toString());
+        }
+
+    }
+
+    public void removeSubscription(Customer customer) {
         customerArrayList.remove(customer);
     }
 }
