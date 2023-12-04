@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class MonthCheckIn {
 
-    private static final int minCheckIn = 3;
+    private static final int minCheckIn = 5;
     private int checkInCpt;
 
     private Members member;
@@ -31,7 +31,7 @@ public class MonthCheckIn {
     }
 
     public static class Builder {
-        private static final int mincheckIn = 3;
+        private static final int mincheckIn = 5;
         private int checkInCpt;
 
         private Members member;

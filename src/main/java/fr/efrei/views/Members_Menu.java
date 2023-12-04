@@ -30,6 +30,7 @@ public class Members_Menu {
             System.out.println(" 1. Members detail :");
             System.out.println(" 2. Change your age in our database :");
             System.out.println(" 3. Unsubscribe to a subscription :");
+            System.out.println(" 4. Check in :");
             System.out.println(" 5. Go to the main menu");
             System.out.println(" 6. Quit the gym");
             System.out.print("Enter your choice: ");
@@ -63,22 +64,29 @@ public class Members_Menu {
                     break;
 
                 case 2:
-                    // Call a method to add information
+
+                    // Call a method to update information
+
+                    System.out.println("Change the age...");
+                    MembersRepository membersRepository1 = MembersRepository.getRepository();
+                    membersRepository1.updateMemberAge();
+
+                    break;
+                case 3:
                     System.out.println("Unsubscribe to a subscription...");
                     SubscriptionRepository subscriptionRepository = SubscriptionRepository.getRepository();
                     subscriptionRepository.addSubscriptions();
                     MembersRepository membersRepository = MembersRepository.getRepository();
                     membersRepository.unsubscribe();
-                    break;
-                case 3:
-                    // Call a method to update information
-                    System.out.println("Change the age...");
+
 
                     break;
 
                 case 4:
 
-                    System.out.println("");
+                    System.out.println(" Check in...");
+                    MembersRepository membersRepository2 = MembersRepository.getRepository();
+                    //membersRepository2.checkIn();
 
                     break;
                 case 5:

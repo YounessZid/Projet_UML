@@ -12,6 +12,12 @@ public class Subscription {
     private String description;
     private Customer customer;
 
+    private int minCheckIn = 5;
+    private int ID_Subscription;
+
+    public int getMinCheckIn() {
+        return minCheckIn;
+    }
 
     private Subscription(Subscription.Builder builder){
         name = builder.name;
@@ -20,6 +26,7 @@ public class Subscription {
         startDate = builder.startDate;
         description = builder.description;
         customer = builder.customer;
+        ID_Subscription = builder.ID_Subscription;
     }
 
 
@@ -45,18 +52,19 @@ public class Subscription {
         return customer;
     }
 
-
-
+    public int getID_Subscription() {
+        return ID_Subscription;
+    }
 
     @Override
     public String toString() {
-        return "Subscription{" +
-                "description='" + description + '\'' +
-                ", duration='" + duration + '\'' +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", startDate=" + startDate +
-                ", customer=" + customer +
+        return "Subscription :" +
+                "\nName :'" + name + '\'' +
+                "\nWhat you can expect :" + description + '\'' +
+                "\nBeginning :" + startDate + '\'' +
+                "\nDuration of the subscription :" + duration + '\'' +
+                "\nPrice :" + price +
+                "\nID of the Subscription :" + ID_Subscription +
                 '}';
     }
 
@@ -67,7 +75,12 @@ public class Subscription {
         private Date startDate;
         private String description;
         private Customer customer;
+        private int ID_Subscription;
 
+        public Builder setID_Subscription(int ID_Subscription) {
+            this.ID_Subscription = ID_Subscription;
+            return this;
+        }
 
         public Builder setName(String name) {
             this.name = name;

@@ -40,6 +40,7 @@ public class SubscriptionRepository {
                     .setStartDate((new SimpleDateFormat("yyyy-MM-dd")).parse("2023-01-01"))
                     .setDescription("Standard package")
                     .setCustomer((Customer)null)
+                    .setID_Subscription(1)
                     .build();
             Subscription subscription2 = (new Subscription.Builder())
                     .setName("Premium")
@@ -48,6 +49,7 @@ public class SubscriptionRepository {
                     .setStartDate((new SimpleDateFormat("yyyy-MM-dd")).parse("2023-01-01"))
                     .setDescription("Includes access to classes")
                     .setCustomer((Customer)null)
+                    .setID_Subscription(2)
                     .build();
             Subscription subscription3 = (new Subscription.Builder())
                     .setName("Gold")
@@ -56,6 +58,7 @@ public class SubscriptionRepository {
                     .setStartDate((new SimpleDateFormat("yyyy-MM-dd")).parse("2023-01-01"))
                     .setDescription("VIP package")
                     .setCustomer((Customer)null)
+                    .setID_Subscription(3)
                     .build();
             this.subscriptionArrayList.add(subscription1);
             this.subscriptionArrayList.add(subscription2);
@@ -65,6 +68,7 @@ public class SubscriptionRepository {
         }
 
     }
+
 
     public void removeSubscription(Subscription subscription) {
         this.subscriptionArrayList.remove(subscription);

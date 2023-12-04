@@ -53,19 +53,28 @@ public class MembersRepository {
         System.out.println("Member with ID " + memberId + " unsubscribed successfully.");
     }
 
-    public void baseMember() {
-        Customer baseCustomer = new Customer.Builder()
-                .setFirstName("John")
-                .setLastName("Doe")
-                .setAge(30)  // Set the appropriate age
-                .setID(1)    // Set a unique ID
-                .build();
+    public void updateMemberAge() {
+        Scanner scanner = new Scanner(System.in);
 
-        Members baseMember = new Members.Builder()
-                .setCustomer(baseCustomer)
-                .build();
+        // Ask for member ID to update
+        System.out.print("Enter member ID to update: ");
+        int memberId = scanner.nextInt();
 
-        membersArrayList.add(baseMember);
+        // Find the member with the given ID
+        Members member = findMemberById(memberId);
+
+        if (member == null) {
+            System.out.println("Member with ID " + memberId + " not found.");
+            return;
+        }
+
+        // Ask for new age
+        System.out.print("Enter new age: ");
+        int newAge = scanner.nextInt();
+
+        // Update the age
+        member.getCustomer().setAge(newAge);
+        System.out.println("Member with ID " + memberId + " updated successfully.");
     }
 
     // Helper method to find a member by ID

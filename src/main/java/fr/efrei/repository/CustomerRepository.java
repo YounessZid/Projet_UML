@@ -116,11 +116,7 @@ public class CustomerRepository {
         return customer;
     }
 
-    public static Customer baseCustomer() {
-        Customer customer1 = (new Customer.Builder()).setFirstName("John").setLastName("Doe").setAge(25).setID(1).build();
-        customerArrayList.add(customer1);
-        return customer1;
-    }
+
 
     public void updateCustomerAge() {
         Scanner scanner = new Scanner(System.in);
@@ -172,17 +168,33 @@ public class CustomerRepository {
 
                 double discountedPrice = (double)chosenSubscription.getPrice() * (1.0 - discount);
                 this.findCustomerById(customerId);
-                (new Customer.Builder()).setFirstName(customer.getFirstName()).setLastName(customer.getLastName()).setAge(customer.getAge()).setID(customer.getID()).setID_Subscription(subscriptionChoice).build();
-                (new Members.Builder()).setCustomer(customer).build();
+                Customer updatedCustomer = new Customer.Builder()
+                        .setFirstName(customer.getFirstName())
+                        .setLastName(customer.getLastName())
+                        .setAge(customer.getAge())
+                        .setID(customer.getID())
+                        .build();
+
+                Members member = new Members.Builder()
+                        .setCustomer(updatedCustomer)
+                        .setID_Subscription(chosenSubscription.getID_Subscription())
+                        .build();
+
                 System.out.println("Subscription details:");
                 System.out.println(chosenSubscription.toString());
                 System.out.println("Final Price: $" + discountedPrice);
                 System.out.println("Member ID: " + customer.getID());
-                System.out.println("ID Subscription: " + customer.getID_Subscription());
+                System.out.println("Subscription ID: " + chosenSubscription.getID_Subscription());
             } else {
                 System.out.println("Invalid subscription choice.");
             }
         }
+
+
+            // Create a new Customer object with the updated ID_Subscription
+
+            // Create a new Members object with the updated Customer and ID_Subscription
+
     }
 
     private Customer findCustomerById(int customerId) {
@@ -218,6 +230,7 @@ public class CustomerRepository {
         }
 
     }
+
 
     public void removeSubscription(Customer customer) {
         customerArrayList.remove(customer);
