@@ -1,47 +1,62 @@
 package fr.efrei;
 import fr.efrei.domain.Members;
+import fr.efrei.repository.CustomerRepository;
 import fr.efrei.views.Customer_Menu;
+import fr.efrei.views.GymAdminMenu;
 import fr.efrei.views.Members_Menu;
+import fr.efrei.repository.GymAdminRepository;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Menu {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
+        GymAdminRepository.getRepository().BaseGymAdmins();
 
         while (!exit) {
             System.out.println("===== Gym Subscription Menu =====");
-            System.out.println("1. Customer menu :)");
-            System.out.println("2. Member menu :|");
-            System.out.println("3. Change the age");
+            System.out.println("1. Customer menu :");
+            System.out.println("2. Member menu :");
+            System.out.println("3. GymAdmin menu :");
             System.out.println("4. Quit the gym");
-            System.out.println("5. Au revoir Youness !");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    // Call a method to view information
-                    System.out.println("Subscribe to a subscription...");
+                    // Go to the customer menu
+                    System.out.println("Customer Menu...");
                     Customer_Menu.main(args);
+                    CustomerRepository customerRepository = CustomerRepository.getRepository();
+                    customerRepository.baseCustomers();
                     break;
                 case 2:
-                    // Call a method to add information
+                    // Go to the members menu
                     System.out.println("Members menu...");
                     Members_Menu.main(args);
 
                     break;
                 case 3:
-                    // Call a method to update information
-                    System.out.println("Change the age...");
+                    // Go to the gym admin menu
+                    System.out.println("GYM Admin menu...");
+
+                    // Prompt for GymAdmin ID
+                    System.out.print("Enter GymAdmin ID: ");
+                    int adminID = scanner.nextInt();
+
+                    // Check if the user is a GymAdmin
+                    if (GymAdminRepository.getRepository().isGymAdmin(adminID)) {
+                        // User is a GymAdmin, allow access to GymAdminMenu
+                        GymAdminMenu.main(args);
+                    } else {
+                        System.out.println("Invalid GymAdmin ID. Access denied.");
+                    }
                     break;
+
                 case 4:
-                    // Call a method to delete information
-                    System.out.println("Quit the gym...");
-                    break;
-                case 5:
                     // Exit the program
                     exit = true;
                     System.out.println("Exiting Information System. Goodbye!");

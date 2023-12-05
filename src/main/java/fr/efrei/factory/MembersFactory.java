@@ -3,7 +3,7 @@ import fr.efrei.domain.Customer;
 import fr.efrei.domain.Members;
 
 public class MembersFactory {
-    public static Members getMembers(Customer customer, int ID_Subscription){
+    public static Members createMembers(Customer customer, int ID_Subscription){
         if (customer == null || ID_Subscription == 0)
             return null;
         return new Members.Builder()

@@ -1,6 +1,7 @@
 package fr.efrei.repository;
 import fr.efrei.domain.Members;
 import fr.efrei.domain.Customer;
+import fr.efrei.domain.Subscription;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -12,9 +13,6 @@ import java.util.Scanner;
 public class MembersRepository {
 
 
-    public void addMembers(Members members) {
-        membersArrayList.add(members);
-    }
 
     private List<Members> membersArrayList = new ArrayList<>();
     private static MembersRepository instance = null;
@@ -53,29 +51,7 @@ public class MembersRepository {
         System.out.println("Member with ID " + memberId + " unsubscribed successfully.");
     }
 
-    public void updateMemberAge() {
-        Scanner scanner = new Scanner(System.in);
 
-        // Ask for member ID to update
-        System.out.print("Enter member ID to update: ");
-        int memberId = scanner.nextInt();
-
-        // Find the member with the given ID
-        Members member = findMemberById(memberId);
-
-        if (member == null) {
-            System.out.println("Member with ID " + memberId + " not found.");
-            return;
-        }
-
-        // Ask for new age
-        System.out.print("Enter new age: ");
-        int newAge = scanner.nextInt();
-
-        // Update the age
-        member.getCustomer().setAge(newAge);
-        System.out.println("Member with ID " + memberId + " updated successfully.");
-    }
 
     // Helper method to find a member by ID
     public Members findMemberById(int memberId) {
@@ -92,6 +68,50 @@ public class MembersRepository {
             System.out.println(member);
         }
     }
+    public void checkInStatus() {
+        Scanner scanner = new Scanner(System.in);
+
+        // Ask for member ID to check in
+        System.out.print("Enter member ID to check in: ");
+        int memberId = scanner.nextInt();
+
+        // Find the member with the given ID
+        Members member = findMemberById(memberId);
+
+        if (member == null) {
+            System.out.println("Member with ID " + memberId + " not found.");
+            return;
+        }
+
+        // Ask for the number of times the member checked in
+        System.out.print("Enter the number of times the member checked in: ");
+        int checkInCount = scanner.nextInt();
+
+        // Check the condition and display the appropriate message
+        if (checkInCount >= 5) {
+            System.out.println("Congrats for your dedication!");
+        } else {
+            System.out.println("You didn't check in enough, you will get additional fees.");
+            simulateAdditionnalFees();
+        }
+    }
+    public void simulateAdditionnalFees() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Additional fees payment for subscription: ");
+        System.out.println("Price: $" + 20);
+        System.out.println("Enter 'confirm' to proceed with payment: ");
+
+        String input = scanner.nextLine();
+
+        if (input.equalsIgnoreCase("confirm")) {
+            System.out.println("Payment successful!");
+            // Perform any additional logic here, e.g., update the subscription status, etc.
+        } else {
+            System.out.println("Payment canceled.");
+        }
+
+    }
+
 
     public List<Members> getMembersArrayList() {
         return membersArrayList;

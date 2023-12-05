@@ -2,6 +2,8 @@ package fr.efrei.views;
 
 import fr.efrei.Menu;
 import fr.efrei.domain.Members;
+
+import java.text.ParseException;
 import java.util.Scanner;
 import fr.efrei.domain.Customer;
 import fr.efrei.repository.CustomerRepository;
@@ -21,18 +23,17 @@ public class Members_Menu {
     }
 
     // Method to display the Members menu
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         Scanner member_scanner = new Scanner(System.in);
         boolean exit = false;
 
         while (!exit) {
             System.out.println(" ===== Members Menu =====");
             System.out.println(" 1. Members detail :");
-            System.out.println(" 2. Change your age in our database :");
-            System.out.println(" 3. Unsubscribe to a subscription :");
-            System.out.println(" 4. Check in :");
-            System.out.println(" 5. Go to the main menu");
-            System.out.println(" 6. Quit the gym");
+            System.out.println(" 2. Unsubscribe to a subscription :");
+            System.out.println(" 3. Check in :");
+            System.out.println(" 4. Go to the main menu");
+            System.out.println(" 5. Quit the gym");
             System.out.print("Enter your choice: ");
 
             int choice = member_scanner.nextInt();
@@ -49,7 +50,7 @@ public class Members_Menu {
                     int customerIdForDetails = member_scanner.nextInt();
 
                     // Find the customer with the given ID
-                    Customer customerForDetails = customerRepository.getCustomerById(customerIdForDetails);
+                    Customer customerForDetails = customerRepository.findCustomerById(customerIdForDetails);
 
                     if (customerForDetails == null) {
                         System.out.println("Customer with ID " + customerIdForDetails + " not found.");
@@ -61,46 +62,35 @@ public class Members_Menu {
 
                         viewMemberDetails(member);
                     }
-                    break;
 
+                    break;
                 case 2:
-
-                    // Call a method to update information
-
-                    System.out.println("Change the age...");
-                    MembersRepository membersRepository1 = MembersRepository.getRepository();
-                    membersRepository1.updateMemberAge();
-
-                    break;
-                case 3:
                     System.out.println("Unsubscribe to a subscription...");
-                    SubscriptionRepository subscriptionRepository = SubscriptionRepository.getRepository();
-                    subscriptionRepository.addSubscriptions();
                     MembersRepository membersRepository = MembersRepository.getRepository();
                     membersRepository.unsubscribe();
 
 
                     break;
 
-                case 4:
+                case 3:
 
                     System.out.println(" Check in...");
                     MembersRepository membersRepository2 = MembersRepository.getRepository();
-                    //membersRepository2.checkIn();
+                    membersRepository2.checkInStatus();
 
                     break;
-                case 5:
+                case 4:
 
                     System.out.println("Go to the main menu...");
                     Menu.main(args);
                     break;
-                case 6:
+                case 5:
                     // Exit the program
                     System.out.println("Quit the gym...");
                     exit = true;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 6.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 5.");
             }
         }
 

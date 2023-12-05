@@ -1,9 +1,9 @@
  package fr.efrei.domain;
-
+import java.util.*;
+import fr.efrei.repository.SubscriptionRepository;
 public class GymAdmin {
     private String firstName;
     private String lastName;
-    private String password;
     private int ID_Admin;
 
 
@@ -13,7 +13,6 @@ public class GymAdmin {
     private GymAdmin(GymAdmin.Builder builder) {
         firstName = builder.firstName;
         lastName = builder.lastName;
-        password = builder.password;
         ID_Admin = builder.ID_Admin;
 
     }
@@ -29,24 +28,35 @@ public class GymAdmin {
         return lastName;
 
     }
-    private String getPassword() {
-        return password;
-    }
     @Override
     public String toString() {
         return "Members{" +
                 "firstName='" + getFirstName() + '\'' +
                 ", lastName='" + getLastName() + '\'' +
-                ", password='" + getPassword() + '\'' +
                 "Id=" + getID_Admin() +
                 '}';
+    }
+
+
+    public int getAdminID() {
+        return ID_Admin;
     }
 
     public static class Builder {
         private String firstName;
         private String lastName;
-        private String password;
         private int ID_Admin;
+        public int getID_Admin() {
+            return ID_Admin;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
 
         public Builder setfirstName(String firstName) {
             this.firstName = firstName;
@@ -58,10 +68,6 @@ public class GymAdmin {
             return this;
         }
 
-        public Builder setPassword(String password) {
-            this.password = password;
-            return this;
-        }
         public Builder setID_Admin(int ID_Admin) {
             this.ID_Admin = ID_Admin;
             return this;

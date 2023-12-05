@@ -15,6 +15,7 @@ public class Subscription {
     private int minCheckIn = 5;
     private int ID_Subscription;
 
+
     public int getMinCheckIn() {
         return minCheckIn;
     }
@@ -58,14 +59,26 @@ public class Subscription {
 
     @Override
     public String toString() {
-        return "Subscription :" +
-                "\nName :'" + name + '\'' +
-                "\nWhat you can expect :" + description + '\'' +
-                "\nBeginning :" + startDate + '\'' +
-                "\nDuration of the subscription :" + duration + '\'' +
-                "\nPrice :" + price +
-                "\nID of the Subscription :" + ID_Subscription +
+        return "Subscription{" +
+                "name='" + name + '\'' +
+                ", duration='" + duration + '\'' +
+                ", price=" + price +
+                ", startDate=" + startDate +
+                ", description='" + description + '\'' +
+                ", customer=" + customer +
+                ", minCheckIn=" + minCheckIn +
+                ", ID_Subscription=" + ID_Subscription +
                 '}';
+    }
+
+    public void printSubscriptionDetails() {
+        System.out.println("Subscription Details:");
+        System.out.println("Name: " + name);
+        System.out.println("Duration: " + duration);
+        System.out.println("Price: " + price);
+        System.out.println("Description: " + description);
+        System.out.println("ID_Subscription: " + ID_Subscription);
+        System.out.println("=====================================");
     }
 
     public static class Builder {

@@ -6,8 +6,11 @@
 package fr.efrei.repository;
 
 import fr.efrei.domain.Customer;
+import fr.efrei.factory.CustomerFactory;
 import fr.efrei.domain.Members;
 import fr.efrei.domain.Subscription;
+import fr.efrei.factory.MembersFactory;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,24 +40,29 @@ public class CustomerRepository {
         String lastname = scanner.nextLine();
         System.out.print("Enter age: ");
         int age = scanner.nextInt();
-        if (this.isCustomerExists(firstname, lastname, age)) {
-            PrintStream var10000 = System.out;
-            Customer var10001 = this.getExistingCustomer(firstname, lastname, age);
-            var10000.println("Customer already exists: " + String.valueOf(var10001));
-        } else {
-            Scanner idScanner = new Scanner(System.in);
-            System.out.print("Enter id: ");
 
-            int id;
-            for(id = idScanner.nextInt(); this.isDuplicateId(id); id = idScanner.nextInt()) {
-                System.out.println("This customer id is already taken, please enter another one");
-            }
-
-            Customer customer = (new Customer.Builder()).setFirstName(firstname).setLastName(lastname).setAge(age).setID(id).build();
-            customerArrayList.add(customer);
-            customer.printCustomerDetails();
+        while (isCustomerExists(firstname, lastname, age)) {
+            System.out.println("Customer already exists. Please enter the details again.");
+            System.out.print("Enter firstname: ");
+            firstname = scanner.nextLine();
+            System.out.print("Enter lastname: ");
+            lastname = scanner.nextLine();
+            System.out.print("Enter age: ");
+            age = scanner.nextInt();
         }
+
+        Scanner idScanner = new Scanner(System.in);
+        System.out.print("Enter id: ");
+
+        int id;
+        for (id = idScanner.nextInt(); isDuplicateId(id); id = idScanner.nextInt()) {
+            System.out.println("This customer id is already taken, please enter another one");
+        }
+        Customer customer = CustomerFactory.createCustomer(firstname, lastname, age, id);
+        customerArrayList.add(customer);
+        customer.printCustomerDetails();
     }
+
 
     private boolean isDuplicateId(int id) {
         Iterator var2 = customerArrayList.iterator();
@@ -86,7 +94,7 @@ public class CustomerRepository {
         return true;
     }
 
-    private Customer getExistingCustomer(String firstname, String lastname, int age) {
+    /*private Customer getExistingCustomer(String firstname, String lastname, int age) {
         Iterator var4 = customerArrayList.iterator();
 
         Customer customer;
@@ -99,22 +107,8 @@ public class CustomerRepository {
         } while(!customer.getFirstName().equals(firstname) || !customer.getLastName().equals(lastname) || customer.getAge() != age);
 
         return customer;
-    }
+    }*/
 
-    public Customer getCustomerById(int customerId) {
-        Iterator var2 = customerArrayList.iterator();
-
-        Customer customer;
-        do {
-            if (!var2.hasNext()) {
-                return null;
-            }
-
-            customer = (Customer)var2.next();
-        } while(customer.getID() != customerId);
-
-        return customer;
-    }
 
 
 
@@ -123,17 +117,23 @@ public class CustomerRepository {
         System.out.print("Enter customer ID to update age: ");
         int idToUpdate = scanner.nextInt();
         boolean customerExists = false;
-        Iterator var4 = customerArrayList.iterator();
 
-        while(var4.hasNext()) {
-            Customer customer = (Customer)var4.next();
+        Iterator<Customer> iterator = customerArrayList.iterator();
+
+        while (iterator.hasNext()) {
+            Customer customer = iterator.next();
             if (customer.getID() == idToUpdate) {
                 customerExists = true;
                 System.out.print("Enter new age for the customer: ");
                 int newAge = scanner.nextInt();
-                Customer updatedCustomer = (new Customer.Builder()).setFirstName(customer.getFirstName()).setLastName(customer.getLastName()).setAge(newAge).setID(customer.getID()).build();
-                customerArrayList.remove(customer);
+
+                // Remove the existing customer from the list
+                iterator.remove();
+
+                // Create and add the updated customer
+                Customer updatedCustomer = CustomerFactory.createCustomer(customer.getFirstName(), customer.getLastName(), newAge, customer.getID());
                 customerArrayList.add(updatedCustomer);
+
                 System.out.println("Age updated successfully for customer with ID " + idToUpdate);
                 break;
             }
@@ -142,8 +142,8 @@ public class CustomerRepository {
         if (!customerExists) {
             System.out.println("Customer with ID " + idToUpdate + " not found.");
         }
-
     }
+
 
     public void subscribe() {
         Scanner scanner = new Scanner(System.in);
@@ -154,7 +154,8 @@ public class CustomerRepository {
             System.out.println("Customer with ID " + customerId + " not found.");
         } else {
             System.out.println("Existing Subscriptions:");
-            this.displaySubscriptions();
+            SubscriptionRepository subscriptionRepository = SubscriptionRepository.getRepository();
+            subscriptionRepository.displaySubscriptions();
             System.out.print("Enter the subscription number to subscribe: ");
             int subscriptionChoice = scanner.nextInt();
             if (subscriptionChoice >= 1 && subscriptionChoice <= SubscriptionRepository.getRepository().getSubscriptionArrayList().size()) {
@@ -166,38 +167,48 @@ public class CustomerRepository {
                     System.out.println("Congratulations! You get a 20% discount for being under 18 or over 60.");
                 }
 
-                double discountedPrice = (double)chosenSubscription.getPrice() * (1.0 - discount);
-                this.findCustomerById(customerId);
-                Customer updatedCustomer = new Customer.Builder()
-                        .setFirstName(customer.getFirstName())
-                        .setLastName(customer.getLastName())
-                        .setAge(customer.getAge())
-                        .setID(customer.getID())
-                        .build();
 
-                Members member = new Members.Builder()
-                        .setCustomer(updatedCustomer)
-                        .setID_Subscription(chosenSubscription.getID_Subscription())
-                        .build();
+                double discountedPrice = (double)chosenSubscription.getPrice() * (1.0 - discount);
+                simulatePayment(chosenSubscription, discountedPrice);
+                Customer updatedCustomer = CustomerFactory.createCustomer(customer.getFirstName(), customer.getLastName(), customer.getAge(), customer.getID());
+
+                Members member = MembersFactory.createMembers(updatedCustomer, chosenSubscription.getID_Subscription());
+                MembersRepository.getRepository().addMember(member);
 
                 System.out.println("Subscription details:");
                 System.out.println(chosenSubscription.toString());
                 System.out.println("Final Price: $" + discountedPrice);
                 System.out.println("Member ID: " + customer.getID());
                 System.out.println("Subscription ID: " + chosenSubscription.getID_Subscription());
+
             } else {
                 System.out.println("Invalid subscription choice.");
             }
+
         }
 
 
-            // Create a new Customer object with the updated ID_Subscription
 
-            // Create a new Members object with the updated Customer and ID_Subscription
+    }
+    public void simulatePayment(Subscription subscription, double price) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Simulating payment for subscription: " + subscription.getName());
+        System.out.println("Price: $" + price);
+        System.out.println("Enter 'confirm' to proceed with payment: ");
+
+        String input = scanner.nextLine();
+
+        if (input.equalsIgnoreCase("confirm")) {
+            System.out.println("Payment successful!");
+            // Perform any additional logic here, e.g., update the subscription status, etc.
+        } else {
+            System.out.println("Payment canceled.");
+        }
 
     }
 
-    private Customer findCustomerById(int customerId) {
+
+    public Customer findCustomerById(int customerId) {
         Iterator var2 = customerArrayList.iterator();
 
         Customer customer;
@@ -212,27 +223,18 @@ public class CustomerRepository {
         return customer;
     }
 
-    private void displaySubscriptions() {
-        for(int i = 0; i < SubscriptionRepository.getRepository().getSubscriptionArrayList().size(); ++i) {
-            Subscription subscription = (Subscription)SubscriptionRepository.getRepository().getSubscriptionArrayList().get(i);
-            System.out.println(i + 1 + ". " + subscription.toString());
-        }
 
+    public void displayCustomerDetails(Customer customer) {
+        System.out.println(customer.toString());
     }
 
-    public void displayCustomerDetails() {
-        System.out.println("Customer List:");
-        Iterator var1 = customerArrayList.iterator();
-
-        while(var1.hasNext()) {
-            Customer customer = (Customer)var1.next();
-            System.out.println(customer.toString());
-        }
-
+    public void baseCustomers() {
+        Customer customer1 = CustomerFactory.createCustomer("John", "Doe", 25, 1);
+        customerArrayList.add(customer1);
     }
 
 
-    public void removeSubscription(Customer customer) {
+    public void removeCustomer(Customer customer) {
         customerArrayList.remove(customer);
     }
 }
