@@ -36,6 +36,15 @@ public class GymAdmin {
                 "Id=" + getID_Admin() +
                 '}';
     }
+    public void addSubscription(Subscription subscription) {
+        SubscriptionRepository.getRepository().getSubscriptionArrayList().add(subscription);
+        System.out.println("Subscription added successfully.");
+    }
+
+    public void removeSubscription(Subscription subscription) {
+        SubscriptionRepository.getRepository().removeSubscription(subscription);
+        System.out.println("Subscription removed successfully.");
+    }
 
 
     public int getAdminID() {

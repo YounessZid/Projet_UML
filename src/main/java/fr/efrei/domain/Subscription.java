@@ -70,6 +70,15 @@ public class Subscription {
                 ", ID_Subscription=" + ID_Subscription +
                 '}';
     }
+    public void printSubscriptionDetails() {
+        System.out.println("Subscription Details:");
+        System.out.println("Name: " + name);
+        System.out.println("Duration: " + duration);
+        System.out.println("Price: " + price);
+        System.out.println("Description: " + description);
+        System.out.println("ID_Subscription: " + ID_Subscription);
+        System.out.println("=====================================");
+    }
 
     public void printSubscriptionDetails() {
         System.out.println("Subscription Details:");
